@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import { JapanMap } from './Components/JapanMap/JapanMap';
-import { NoteSlide } from './Components/NoteSlide/NoteSlide';
+import { NoteSlide } from './Components/NoteSlide/PlanPage';
 
 function App() {
   return (
