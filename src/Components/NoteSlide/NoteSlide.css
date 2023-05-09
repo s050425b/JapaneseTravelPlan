@@ -1,8 +1,32 @@
 #NoteSlide {
     position: fixed;
     right: 0;
-    border: 1px solid red;
+    border: 1px solid rgb(205, 205, 205);
+    border-radius: 20px;
     min-width: 200px;
     width: 25%;
-    height: 90vh;
+    overflow-y: scroll;
+    height: 97vh;
+}
+
+.pageBtn-container {
+    border-bottom: 1px solid rgb(205, 205, 205);
+}
+
+.pageBtn {
+    border: 1px solid transparent;
+    background-color: white;
+    padding: 15px 20px;
+}
+
+.pageBtn:hover {
+    background-color:rgb(172, 216, 254); 
+}
+
+.page {
+    display:none;
+}
+
+.activePage {
+    display: block !important;
 }

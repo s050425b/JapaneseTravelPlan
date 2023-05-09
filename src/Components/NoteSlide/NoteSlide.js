@@ -1,69 +1,40 @@
-import { useState, useEffect } from "react";
-import { NoteItem } from "./NoteItem/NoteItem";
-import { NoteItemCreate } from "./NoteItem/NoteItemCreate";
+import { AgendaPage } from "./AgendaPage/AgendaPage";
 import "./NoteSlide.css";
+import { PlanPage } from "./PlanPage/PlanPage";
 
 export function NoteSlide() {
-    const [agendaItem, setAgendaItem] = useState([]);
-    const [showCreateItem, setShowCreateItem] = useState(false);
-
-    useEffect(() => {
-        setAgendaItem([
-            {
-                item_id: 1,
-                name: "Agenda item - 1",
-                location: "Disneyland",
-                date: "17-08-2022",
-                time: "18:00",
-                description: "Hello World!"
-            },
-            {
-                item_id: 2,
-                name: "Agenda item - 2",
-                location: "Disneyland",
-                date: "17-08-2022",
-                time: "18:00",
-                description: "Hello World!"
-            },
-            {
-                item_id: 3,
-                name: "Agenda item - 3",
-                location: "Disneyland",
-                date: "17-08-2022",
-                time: "18:00",
-                description: "Hello World!"
-            },
-            {
-                item_id: 4,
-                name: "Agenda item - 4",
-                location: "Disneyland",
-                date: "17-08-2022",
-                time: "18:00",
-                description: "Hello World!"
-            },
-        ]);
-    }, []);
-
-    function onClickPlusSign() {
-        setShowCreateItem(true);
+    function setActivePage(e) {
+        switch (e.target.innerHTML) {
+            case "Plan":
+                removeAllActiveClass();
+                document.getElementById("planPage").classList.add("activePage");
+                break;
+            case "Agenda":
+                removeAllActiveClass();
+                document.getElementById("agendaPage").classList.add("activePage");
+                break;
+            default:
+                console.log("Page Not Found");
+        };
     }
 
-    function onClickAddBtn() {
-        setShowCreateItem(false);
+    function removeAllActiveClass() {
+        const pageList = document.getElementsByClassName("page");
+        for (const page of pageList) {
+            page.classList.remove("activePage");
+        }
     }
 
-
-    let noteItemArr = [];
-    for (const item of agendaItem) {
-        noteItemArr.push(<NoteItem key={item.item_id} item_id={item.item_id} item_name={item.name} item_location={item.location} item_desc={item.description} item_date={item.date} item_time={item.time} />);
-    }
     return (
         <div id="NoteSlide">
-            <button onClick={onClickPlusSign}>+</button>
-            <div className="accordion" id="accordionExample">
-                {noteItemArr}
-                <NoteItemCreate isShow={showCreateItem} handleClick={onClickAddBtn}/>
+            <div className="pageBtn-container">
+                <button onClick={setActivePage} className="pageBtn">Plan</button>
+                <button onClick={setActivePage} className="pageBtn">Agenda</button>
+            </div>
+            <div>
+                <PlanPage />
+                <AgendaPage />
             </div>
         </div>
-    );
+    )
 }
