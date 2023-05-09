@@ -1,34 +1,22 @@
 import { useEffect, useState } from "react";
-import { NoteItem } from "../PlanPage/NoteItem/NoteItem";
+import { AgendaItem } from "./AgendaItem/AgendaItem";
 
-export function AgendaPage() {
-    const [agendaItem, setAgendaItem] = useState([]);
+export function AgendaPage({
+    itemList,
+    toggleIsAgendaFunc
+}) {
 
-    useEffect(() => {
-        setAgendaItem([
-            {
-                item_id: 2,
-                name: "Plan item - 2",
-                location: "Disneyland",
-                dateTime: "17-08-2022 18:00",
-                description: "Hello World!",
-                isAgenda: true
-            },
-            {
-                item_id: 4,
-                name: "Plan item - 4",
-                location: "Disneyland",
-                dateTime: "17-08-2022 18:00",
-                description: "Hello World!",
-                isAgenda: true
-            },
-        ]);
-    }, []);
+    let noteItemArr = [];
+    for (const item of itemList.filter(obj => obj.isAgenda)) {
+        noteItemArr.push(<AgendaItem key={item.item_id + "_agenda"} pageName="agenda" item_id={item.item_id} item_name={item.name} item_location={item.location} item_desc={item.description} item_dateTime={item.dateTime} item_isAgenda={item.isAgenda} toggleIsAgendaFunc={toggleIsAgendaFunc}/>);
+    }
 
     return (
         <div id="agendaPage" className="page">
-            Agenda
-            <NoteItem />
+            <div className="accordion" id="collapse_agenda">
+                {noteItemArr}
+            </div>
+            
         </div>
     );
 }

@@ -1,12 +1,16 @@
 #NoteSlide {
     position: fixed;
-    right: 0;
+    right: -400px;
     border: 1px solid rgb(205, 205, 205);
     border-radius: 20px;
-    min-width: 450px;
-    width: 25%;
+    width: 450px;
     overflow-y: scroll;
     height: 97vh;
+    transition: right 1s;
+}
+
+.showSlide {
+    right: 0 !important;
 }
 
 .pageBtn-container {
@@ -19,7 +23,7 @@
     padding: 15px 20px;
 }
 
-.pageBtn:hover {
+.pageBtn-active {
     background-color:rgb(172, 216, 254); 
 }
 
@@ -29,4 +33,16 @@
 
 .activePage {
     display: block !important;
+}
+
+#slideBtn {
+    float: right;
+}
+
+.placeName {
+    font-weight: 600;
+    font-size: 2rem;
+    text-align: center;
+    width: 100%;
+    padding: 20px 0;
 }

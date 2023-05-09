@@ -1,6 +1,6 @@
-import "./NoteItem.css";
+import "./AgendaItem.css";
 
-export function NoteItem({
+export function AgendaItem({
     item_id,
     item_name,
     item_location,
@@ -8,25 +8,20 @@ export function NoteItem({
     item_dateTime,
     item_isAgenda,
     pageName,
-    toggleIsAgendaFunc,
-    removeItemFunc
+    toggleIsAgendaFunc
 }) {
     function handleAddAgenda() {
         toggleIsAgendaFunc(item_id);
     }
 
-    function handleDeleteItem() {
-        removeItemFunc(item_id);
-    }
-
     return (
         <div className="accordion-item">
             <h2 className="accordion-header">
-                <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target={"#collapse" + item_id} aria-expanded="true" aria-controls={"collapse" + item_id}>
+                <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target={"#collapse" + item_id + "_agenda"} aria-expanded="true" aria-controls={"collapse" + item_id + "_agenda"}>
                     {item_name}
                 </button>
             </h2>
-            <div id={"collapse" + item_id} className="accordion-collapse collapse" data-bs-parent={"#collapse_" + pageName}>
+            <div id={"collapse" + item_id + "_agenda"} className="accordion-collapse collapse" data-bs-parent={"#collapse_" + pageName}>
                 <div className="accordion-body">
                     <dl className="row">
                         <dt className="col-sm-3">Location:</dt>
@@ -39,7 +34,6 @@ export function NoteItem({
                         <dd className="col-sm-9">{item_desc}</dd>
 
                         <button className="addAgendaBtn btn btn-outline-primary" onClick={handleAddAgenda}>{item_isAgenda ? "Remove from Agenda" : "Add to Agenda"}</button>
-                        <button className="deleteItemBtn btn btn-outline-danger" onClick={handleDeleteItem}>Delete Item</button>
                     </dl>
                 </div>
             </div>
