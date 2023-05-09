@@ -6,6 +6,7 @@ export function NoteItem({
     item_location,
     item_desc,
     item_dateTime,
+    item_isAgenda
 }) {
     return (
         <div className="accordion-item">
@@ -25,6 +26,8 @@ export function NoteItem({
 
                         <dt class="col-sm-3">Description:</dt>
                         <dd class="col-sm-9">{item_desc}</dd>
+
+                        <button className={"addAgendaBtn btn " + (item_isAgenda ? "btn-outline-danger" : "btn-outline-success")} >{item_isAgenda ? "Remove from Agenda" : "Add to Agenda"}</button>
                     </dl>
                 </div>
             </div>

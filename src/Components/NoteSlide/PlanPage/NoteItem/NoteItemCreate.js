@@ -4,11 +4,21 @@ export function NoteItemCreate({
     handleCancel
 }) {
     function handleSubmit() {
+        const nameInput = document.getElementById("nameInput").value;
+        const locationInput = document.getElementById("locationInput").value;
+        const dateTimeInput = document.getElementById("date-timeInput").value;
+        const descInput = document.getElementById("descInput").value;
+
+        if (!(nameInput && locationInput && dateTimeInput && descInput)) {
+            alert("All field should be filled.");
+            return;
+        }
+
         handleClick({
-            name: document.getElementById("nameInput").value,
-            location: document.getElementById("locationInput").value,
-            dateTime: document.getElementById("date-timeInput").value,
-            description: document.getElementById("descInput").value
+            name: nameInput,
+            location: locationInput,
+            dateTime: dateTimeInput,
+            description: descInput
         });
     }
 

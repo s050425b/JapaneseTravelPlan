@@ -1,3 +1,7 @@
 dt, dd {
     line-height: 1.75rem;
 }
+
+.addAgendaBtn {
+    width: 190px;
+}

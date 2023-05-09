@@ -3,38 +3,42 @@ import { NoteItem } from "./NoteItem/NoteItem";
 import { NoteItemCreate } from "./NoteItem/NoteItemCreate";
 
 export function PlanPage() {
-    const [agendaItem, setAgendaItem] = useState([]);
+    const [planItem, setPlanItem] = useState([]);
     const [showCreateItem, setShowCreateItem] = useState(false);
 
     useEffect(() => {
-        setAgendaItem([
+        setPlanItem([
             {
                 item_id: 1,
-                name: "Agenda item - 1",
+                name: "Plan item - 1",
                 location: "Disneyland",
                 dateTime: "17-08-2022 18:00",
-                description: "Hello World!"
+                description: "Hello World!",
+                isAgenda: false
             },
             {
                 item_id: 2,
-                name: "Agenda item - 2",
+                name: "Plan item - 2",
                 location: "Disneyland",
                 dateTime: "17-08-2022 18:00",
-                description: "Hello World!"
+                description: "Hello World!",
+                isAgenda: true
             },
             {
                 item_id: 3,
-                name: "Agenda item - 3",
+                name: "Plan item - 3",
                 location: "Disneyland",
                 dateTime: "17-08-2022 18:00",
-                description: "Hello World!"
+                description: "Hello World!",
+                isAgenda: false
             },
             {
                 item_id: 4,
-                name: "Agenda item - 4",
+                name: "Plan item - 4",
                 location: "Disneyland",
                 dateTime: "17-08-2022 18:00",
-                description: "Hello World!"
+                description: "Hello World!",
+                isAgenda: true
             },
         ]);
     }, []);
@@ -45,10 +49,10 @@ export function PlanPage() {
 
     function onClickAddBtn(submitObj) {
         const appendObj = {
-            item_id: agendaItem.length + 1,
+            item_id: planItem.length + 1,
             ...submitObj
         }
-        setAgendaItem(oldArr => [appendObj, ...oldArr]);
+        setPlanItem(oldArr => [appendObj, ...oldArr]);
         setShowCreateItem(false);
     }
 
@@ -58,8 +62,8 @@ export function PlanPage() {
 
 
     let noteItemArr = [];
-    for (const item of agendaItem) {
-        noteItemArr.push(<NoteItem key={item.item_id} item_id={item.item_id} item_name={item.name} item_location={item.location} item_desc={item.description} item_dateTime={item.dateTime} />);
+    for (const item of planItem) {
+        noteItemArr.push(<NoteItem key={item.item_id} item_id={item.item_id} item_name={item.name} item_location={item.location} item_desc={item.description} item_dateTime={item.dateTime} item_isAgenda={item.isAgenda} />);
     }
     return (
         <div id="planPage" className="page activePage">
