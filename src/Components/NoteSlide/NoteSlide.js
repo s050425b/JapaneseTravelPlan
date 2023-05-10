@@ -2,45 +2,15 @@ import { useEffect, useState } from "react";
 import { AgendaPage } from "./AgendaPage/AgendaPage";
 import "./NoteSlide.css";
 import { PlanPage } from "./PlanPage/PlanPage";
+import { addNoteItemByStation, getNoteItemByStation } from "../../Util/FetchUtil";
 
 export function NoteSlide() {
     const [item, setItem] = useState([]);
 
     useEffect(() => {
-        setItem([
-            {
-                item_id: 1,
-                name: "Item - 1",
-                location: "Disneyland",
-                dateTime: "17-08-2022 18:00",
-                description: "Hello World!",
-                isAgenda: false
-            },
-            {
-                item_id: 2,
-                name: "Item - 2",
-                location: "Disneyland",
-                dateTime: "17-08-2022 18:00",
-                description: "Hello World!",
-                isAgenda: true
-            },
-            {
-                item_id: 3,
-                name: "Item - 3",
-                location: "Disneyland",
-                dateTime: "17-08-2022 18:00",
-                description: "Hello World!",
-                isAgenda: false
-            },
-            {
-                item_id: 4,
-                name: "Item - 4",
-                location: "Disneyland",
-                dateTime: "17-08-2022 18:00",
-                description: "Hello World!",
-                isAgenda: true
-            },
-        ]);
+        getNoteItemByStation().then( responseJson => {
+            setItem(responseJson);
+        });
     }, []);
 
     function addItem(itemObj) {
@@ -52,6 +22,9 @@ export function NoteSlide() {
         setItem(oldArr => [appendObj, ...oldArr]);
 
         //fetch ADD
+        addNoteItemByStation().then( responseJson => {
+            console.log(responseJson);
+        });
     }
 
     function removeItem(id) {
@@ -62,7 +35,7 @@ export function NoteSlide() {
 
     function toggleIsAgenda(id) {
         const deepCloneArr = JSON.parse(JSON.stringify(item));
-        const objIndex = deepCloneArr.map( obj => obj.item_id).indexOf(id);
+        const objIndex = deepCloneArr.map(obj => obj.item_id).indexOf(id);
         deepCloneArr[objIndex].isAgenda = !deepCloneArr[objIndex].isAgenda;
         setItem(deepCloneArr);
 
@@ -92,7 +65,7 @@ export function NoteSlide() {
             page.classList.remove("activePage");
         }
 
-        const btnList =  document.getElementsByClassName("pageBtn");
+        const btnList = document.getElementsByClassName("pageBtn");
         for (const btn of btnList) {
             btn.classList.remove("pageBtn-active");
         }
@@ -115,8 +88,8 @@ export function NoteSlide() {
             </div>
             <div className="placeName">Disneyland</div>
             <div>
-                <PlanPage itemList={item} addItemFunc={addItem} removeItemFunc={removeItem} toggleIsAgendaFunc={toggleIsAgenda}/>
-                <AgendaPage itemList={item} toggleIsAgendaFunc={toggleIsAgenda}/>
+                <PlanPage itemList={item} addItemFunc={addItem} removeItemFunc={removeItem} toggleIsAgendaFunc={toggleIsAgenda} />
+                <AgendaPage itemList={item} toggleIsAgendaFunc={toggleIsAgenda} />
             </div>
         </div>
     )
