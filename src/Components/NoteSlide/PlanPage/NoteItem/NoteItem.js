@@ -1,3 +1,4 @@
+import { useState } from "react";
 import "./NoteItem.css";
 
 export function NoteItem({
@@ -11,12 +12,16 @@ export function NoteItem({
     toggleIsAgendaFunc,
     removeItemFunc
 }) {
+    const [isLoad, setIsLoad] = useState(false);
+
     function handleAddAgenda() {
         toggleIsAgendaFunc(item_id);
     }
 
-    function handleDeleteItem() {
-        removeItemFunc(item_id);
+    async function handleDeleteItem() {
+        setIsLoad(true);
+        await removeItemFunc(item_id);
+        setIsLoad(false);
     }
 
     return (
@@ -40,6 +45,7 @@ export function NoteItem({
 
                         <button className="addAgendaBtn btn btn-outline-primary" onClick={handleAddAgenda}>{item_isAgenda ? "Remove from Agenda" : "Add to Agenda"}</button>
                         <button className="deleteItemBtn btn btn-outline-danger" onClick={handleDeleteItem}>Delete Item</button>
+                        { isLoad && <div className="spinner-grow" role="status"></div> }
                     </dl>
                 </div>
             </div>

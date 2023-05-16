@@ -2,32 +2,46 @@ import { useEffect, useState } from "react";
 import { AgendaPage } from "./AgendaPage/AgendaPage";
 import "./NoteSlide.css";
 import { PlanPage } from "./PlanPage/PlanPage";
-import { addNoteItemByStation, getNoteItemByStation } from "../../Util/FetchUtil";
+import { addNoteItemByStation, deleteNoteItemById, getNoteItemByStation } from "../../Util/FetchUtil";
 
-export function NoteSlide() {
+export function NoteSlide({
+    station
+}) {
     const [item, setItem] = useState([]);
+    // {
+    //     item_id: 0,
+    //     station: "Disney",
+    //     dateTime: 
+    // }
 
     useEffect(() => {
-        getNoteItemByStation().then( responseJson => {
+        getNoteItemByStation(station).then(responseJson => {
             setItem(responseJson);
         });
     }, []);
 
-    function addItem(itemObj) {
-        const appendObj = {
-            item_id: item.length + 1,
-            ...itemObj
-        };
-
-        setItem(oldArr => [appendObj, ...oldArr]);
-
+    async function addItem(itemObj) {
         //fetch ADD
-        addNoteItemByStation().then( responseJson => {
-            console.log(responseJson);
-        });
+        try {
+            const responseJson = await addNoteItemByStation(itemObj, station);
+            const appendObj = {
+                ...responseJson,
+                station: station
+            };
+            setItem( prev => {
+                return [
+                    appendObj
+                    ,...prev
+                ]
+            });
+        } catch ( err ){
+            console.log("Error catched");
+            console.log(err);
+        };
     }
 
-    function removeItem(id) {
+    async function removeItem(id) {
+        const responseJson = await deleteNoteItemById(id);
         setItem(oldArr => oldArr.filter(obj => obj.item_id !== id));
 
         //fetch DELETE

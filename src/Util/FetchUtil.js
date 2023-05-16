@@ -1,28 +1,82 @@
-export async function getNoteItemByStation() {
-    const response = await fetch("https://o5z74sfuia.execute-api.ap-southeast-1.amazonaws.com/items/Disney");
+const host  = "https://o5z74sfuia.execute-api.ap-southeast-1.amazonaws.com";
+
+async function fetchBackend_GET(path){
+    const response = await fetch(`${host}${path}`);
+    
+    if (!response.ok) {
+        throw new Error("Post failed")
+    }
+
     const responseJson = await response.json();
     return responseJson;
 }
 
-export async function addNoteItemByStation() {
+async function fetchBackend_POST(path, body, headersOptional) {
     const headers = {
         "Content-Type": "application/json"
     };
 
-    const body = {
-        station: "Disney",
-        dateTime: "asbc23123",
-        description: "My desc",
-        isAgenda: true,
-        name: "Custome Item"
+    if (headersOptional) {
+        headers = headersOptional;
     }
 
-    const response = await fetch("https://o5z74sfuia.execute-api.ap-southeast-1.amazonaws.com/items/Disney",{
+    const response = await fetch(`${host}${path}`,{
         method: "POST",
         headers: headers,
         body: JSON.stringify(body)
     });
 
-    const responseJson = await response.json();
-    return responseJson;
+    if (!response.ok) {
+        throw new Error("POST failed")
+    }
+
+    return await response.json();
+}
+
+async function fetchBackend_DELETE(path, body, headersOptional) {
+    const headers = {
+        "Content-Type": "application/json"
+    };
+
+    if (headersOptional) {
+        headers = headersOptional;
+    }
+
+    const response = await fetch(`${host}${path}`,{
+        method: "DELETE",
+        headers: headers,
+        body: JSON.stringify(body)
+    });
+
+    if (!response.ok) {
+        throw new Error("DELETE failed")
+    }
+
+    return await response.json();
+}
+
+
+export async function getNoteItemByStation(station) {
+    return await fetchBackend_GET(`/items/${station}`);
+}
+
+export async function addNoteItemByStation(noteItem, station) {
+    const body = {
+        station: station,
+        dateTime: noteItem.dateTime,
+        description: noteItem.description,
+        isAgenda: noteItem.isAgenda,
+        name: noteItem.name,
+        location: noteItem.location
+    }
+
+    return await fetchBackend_POST("/items/Disney", body);
+}
+
+export async function deleteNoteItemById(id) {
+    const body = {
+        id: id
+    }
+
+    return await fetchBackend_DELETE("/items", body);
 }

@@ -1,13 +1,15 @@
 export function NoteItemCreate({
     isShow,
     handleClick,
-    handleCancel
+    handleCancel,
+    isLoad
 }) {
     function handleSubmit() {
         const nameInput = document.getElementById("nameInput").value;
         const locationInput = document.getElementById("locationInput").value;
         const dateTimeInput = document.getElementById("date-timeInput").value;
         const descInput = document.getElementById("descInput").value;
+        const isAgenda = false;
 
         if (!(nameInput && locationInput && dateTimeInput && descInput)) {
             alert("All field should be filled.");
@@ -18,7 +20,8 @@ export function NoteItemCreate({
             name: nameInput,
             location: locationInput,
             dateTime: dateTimeInput,
-            description: descInput
+            description: descInput,
+            isAgenda: isAgenda
         });
     }
 
@@ -50,6 +53,9 @@ export function NoteItemCreate({
                         </div>
                         <button onClick={handleSubmit} className="btn btn-primary">Submit</button>
                         <button onClick={handleCancel} className="btn btn-primary">Cancel</button>
+                        {
+                            isLoad && <div className="spinner-grow" role="status"></div>
+                        }
                     </div>
                 </div>
             </div>
