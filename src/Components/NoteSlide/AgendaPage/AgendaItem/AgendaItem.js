@@ -1,4 +1,7 @@
+import { useState } from "react";
 import "./AgendaItem.css";
+import { Loading } from "../../smallComponent/Loading";
+import { AddAgendaBtn } from "../../smallComponent/AddAgendaBtn";
 
 export function AgendaItem({
     item_id,
@@ -10,8 +13,12 @@ export function AgendaItem({
     pageName,
     toggleIsAgendaFunc
 }) {
-    function handleAddAgenda() {
-        toggleIsAgendaFunc(item_id);
+    const [isLoad, setIsLoad] = useState(false);
+
+    async function handleAddAgenda() {
+        setIsLoad(true);
+        await toggleIsAgendaFunc(item_id);
+        setIsLoad(false);
     }
 
     return (
@@ -33,7 +40,10 @@ export function AgendaItem({
                         <dt className="col-sm-3">Description:</dt>
                         <dd className="col-sm-9">{item_desc}</dd>
 
-                        <button className="addAgendaBtn btn btn-outline-primary" onClick={handleAddAgenda}>{item_isAgenda ? "Remove from Agenda" : "Add to Agenda"}</button>
+                        <div className="agenda-item-btnGroup">
+                            <AddAgendaBtn handleAddAgenda={handleAddAgenda} item_isAgenda={item_isAgenda} />
+                            {isLoad && <Loading />}
+                        </div>
                     </dl>
                 </div>
             </div>

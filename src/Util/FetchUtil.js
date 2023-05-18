@@ -55,6 +55,28 @@ async function fetchBackend_DELETE(path, body, headersOptional) {
     return await response.json();
 }
 
+async function fetchBackend_PUT(path,body, headersOptional) {
+    const headers = {
+        "Content-Type": "application/json"
+    };
+
+    if (headersOptional) {
+        headers = headersOptional;
+    }
+
+    const response = await fetch(`${host}${path}`,{
+        method: "PUT",
+        headers: headers,
+        body: JSON.stringify(body)
+    });
+
+    if (!response.ok) {
+        throw new Error("PUT failed")
+    }
+
+    return await response.json();
+}
+
 
 export async function getNoteItemByStation(station) {
     return await fetchBackend_GET(`/items/${station}`);
@@ -79,4 +101,8 @@ export async function deleteNoteItemById(id) {
     }
 
     return await fetchBackend_DELETE("/items", body);
+}
+
+export async function putNoteItem(noteItem) {
+    return await fetchBackend_PUT("/items", noteItem);
 }

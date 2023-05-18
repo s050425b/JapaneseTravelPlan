@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { AgendaPage } from "./AgendaPage/AgendaPage";
 import "./NoteSlide.css";
 import { PlanPage } from "./PlanPage/PlanPage";
-import { addNoteItemByStation, deleteNoteItemById, getNoteItemByStation } from "../../Util/FetchUtil";
+import { addNoteItemByStation, deleteNoteItemById, getNoteItemByStation, putNoteItem } from "../../Util/FetchUtil";
 
 export function NoteSlide({
     station
@@ -47,10 +47,12 @@ export function NoteSlide({
         //fetch DELETE
     }
 
-    function toggleIsAgenda(id) {
+    async function toggleIsAgenda(id) {
         const deepCloneArr = JSON.parse(JSON.stringify(item));
         const objIndex = deepCloneArr.map(obj => obj.item_id).indexOf(id);
         deepCloneArr[objIndex].isAgenda = !deepCloneArr[objIndex].isAgenda;
+
+        const responseJson = await putNoteItem(deepCloneArr[objIndex]);
         setItem(deepCloneArr);
 
         //fetch CHANGE

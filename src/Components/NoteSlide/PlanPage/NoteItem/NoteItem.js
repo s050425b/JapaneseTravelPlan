@@ -1,5 +1,9 @@
 import { useState } from "react";
 import "./NoteItem.css";
+import { Loading } from "../../smallComponent/Loading";
+import { RubbishBinSVG } from "../../smallComponent/RubbishBinSVG";
+import { EditSVG } from "../../smallComponent/EditSVG";
+import { AddAgendaBtn } from "../../smallComponent/AddAgendaBtn";
 
 export function NoteItem({
     item_id,
@@ -14,8 +18,10 @@ export function NoteItem({
 }) {
     const [isLoad, setIsLoad] = useState(false);
 
-    function handleAddAgenda() {
-        toggleIsAgendaFunc(item_id);
+    async function handleAddAgenda() {
+        setIsLoad(true);
+        await toggleIsAgendaFunc(item_id);
+        setIsLoad(false);
     }
 
     async function handleDeleteItem() {
@@ -43,9 +49,12 @@ export function NoteItem({
                         <dt className="col-sm-3">Description:</dt>
                         <dd className="col-sm-9">{item_desc}</dd>
 
-                        <button className="addAgendaBtn btn btn-outline-primary" onClick={handleAddAgenda}>{item_isAgenda ? "Remove from Agenda" : "Add to Agenda"}</button>
-                        <button className="deleteItemBtn btn btn-outline-danger" onClick={handleDeleteItem}>Delete Item</button>
-                        { isLoad && <div className="spinner-grow" role="status"></div> }
+                        <div className="item-btnGroup">
+                            <AddAgendaBtn handleAddAgenda={handleAddAgenda} item_isAgenda={item_isAgenda}/>
+                            <button className="item-btn btn btn-outline-primary"><EditSVG /></button>
+                            <button className="item-btn btn btn-outline-danger" onClick={handleDeleteItem}><RubbishBinSVG /></button>
+                            { isLoad && <Loading />}
+                        </div>
                     </dl>
                 </div>
             </div>

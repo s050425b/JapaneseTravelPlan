@@ -11,3 +11,10 @@ dt, dd {
     width: 110px;
     margin: 10px;
 }
+
+.agenda-item-btnGroup {
+    display:flex;
+    align-content: center;
+    justify-content: flex-start;
+    align-items: center;
+}

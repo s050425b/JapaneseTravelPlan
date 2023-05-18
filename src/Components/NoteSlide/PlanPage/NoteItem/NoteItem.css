@@ -2,12 +2,18 @@ dt, dd {
     line-height: 1.75rem;
 }
 
-.addAgendaBtn {
-    width: 190px;
+.item-btn {
+    width: 50px;
     margin: 10px;
 }
 
-.deleteItemBtn {
-    width: 110px;
+.createItemBtn{
     margin: 10px;
+}
+
+.item-btnGroup {
+    display:flex;
+    align-content: center;
+    justify-content: flex-start;
+    align-items: center;
 }

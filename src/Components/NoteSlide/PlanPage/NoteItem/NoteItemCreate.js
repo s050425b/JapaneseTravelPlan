@@ -1,3 +1,6 @@
+import { Loading } from "../../smallComponent/Loading";
+import "./NoteItem.css";
+
 export function NoteItemCreate({
     isShow,
     handleClick,
@@ -51,11 +54,14 @@ export function NoteItemCreate({
                             <label htmlFor="descInput" className="form-label">Description</label>
                             <input type="text" className="form-control form-control-sm" id="descInput" />
                         </div>
-                        <button onClick={handleSubmit} className="btn btn-primary">Submit</button>
-                        <button onClick={handleCancel} className="btn btn-primary">Cancel</button>
-                        {
-                            isLoad && <div className="spinner-grow" role="status"></div>
-                        }
+                        <div className="item-btnGroup">
+                            <button onClick={handleSubmit} className="createItemBtn btn btn-primary">Submit</button>
+                            <button onClick={handleCancel} className="createItemBtn btn btn-primary">Cancel</button>
+                            {
+                                isLoad && <Loading />
+                            }
+                        </div>
+
                     </div>
                 </div>
             </div>
